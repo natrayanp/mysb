@@ -168,46 +168,34 @@
                 Stocks Planned
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <div fxFlexLayout="row"  fxLayoutWrap>
+            
       
-                <form [formGroup]="StocklistForm">
-                    <div formArrayName="itemRows">                    
-                    
-                      <div *ngFor="let itemrow of StocklistForm.controls.itemRows.controls; let i=index"  [formGroupName]="i">
-                        <h4>Invoice Row #{{ i + 1 }}</h4>
-                        <div class="form-group">
+               
+                                   
+                      <div formArrayName="pfStocklists">
+                      <div *ngFor="let pfStocklist of pfForm.controls.pfStocklists.controls; let i=index"  [formGroupName]="i">
+                        <div fxFlexLayout="row"  fxLayoutWrap>
+                        
                             <mat-form-field fxFlex="1 0 100px">
-                                <input matInput placeholder="Exchange" formControlName= "itemname">
+                                <input matInput placeholder="Exchange" formControlName= "pfstExchange">
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex="1 0 100px">
+                                <input matInput placeholder="Trading Symbol" formControlName= "pfstTradingsymbl">
                               </mat-form-field>
+
+                              <mat-form-field fxFlex="1 0 100px">
+                                <input matInput placeholder="LTP" formControlName= "pfstLtp">
+                              </mat-form-field>
+
+                              <mat-form-field fxFlex="1 0 100px">
+                                <input matInput placeholder="Amount" formControlName= "pfstAmt">
+                              </mat-form-field>
+                        
+                        
+                        <button mat-icon-button *ngIf="pfForm.controls.pfStocklists.controls.length > 1" (click)="deleteStkRow(i)" ><mat-icon fxAlign="end">cancel</mat-icon></button>
                         </div>
-                        <button md-raised-button *ngIf="StocklistForm.controls.itemRows.controls.length > 1" (click)="deleteStkRow(i)" >Delete Button</button>
-                      </div>
-                    </div>
-              
-                  </form>
-                  
-
-
-
-
-
-    
-        <!--
-                <mat-form-field fxFlex="1 0 100px">
-                    <input matInput placeholder="Trading Symbol">
-                  </mat-form-field>
-            
-
-            
-                <mat-form-field fxFlex="1 0 100px">
-                    <input matInput placeholder="LTP">
-                  </mat-form-field>
-            
-        
-                <mat-form-field fxFlex="1 0 100px">
-                    <input matInput placeholder="Amount">
-                  </mat-form-field>
-                -->
+                    </div>                    
                   
                    <button mat-icon-button (click)="addNewStkRow()"><mat-icon fxAlign="end">add</mat-icon></button>
                    
@@ -308,4 +296,4 @@
 </form>
 
   </div>
-  <pre>{{StocklistForm.value | json}}</pre>
+  <pre>{{pfForm.value | json}}</pre>

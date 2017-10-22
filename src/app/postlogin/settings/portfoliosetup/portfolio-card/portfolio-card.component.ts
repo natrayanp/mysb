@@ -30,7 +30,7 @@ export class PortfolioCardComponent implements OnInit {
       pfTargetIntRate:[null,Validators.required],
       pfPlannedInvAmt:[null,Validators.required],
       pfInvAmtFeq:[null,Validators.required],
-      pfStocklist:this.pffb.array([
+      pfStocklists:this.pffb.array([
         this.initStkItemRows()])
       
       });
@@ -48,17 +48,20 @@ export class PortfolioCardComponent implements OnInit {
 
   initStkItemRows() {
     return this.pffb.group({
-        itemname: ['']
+        pfstExchange : [''],
+        pfstTradingsymbl: [''],
+        pfstLtp: [''],
+        pfstAmt: ['']
     });
 }
 
 addNewStkRow() {
-  const control = <FormArray>this.pfForm.controls['itemRows'];
+  const control = <FormArray>this.pfForm.controls['pfStocklists'];
   control.push(this.initStkItemRows());
 }
 
 deleteStkRow(index: number) {
-  const control = <FormArray>this.pfForm.controls['itemRows'];
+  const control = <FormArray>this.pfForm.controls['pfStocklists'];
   control.removeAt(index);
 }
 
