@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule }    from '@angular/http';
+//import { HttpModule }    from '@angular/http';
 
 
 import { MatSidenavModule } from '@angular/material';
@@ -83,7 +83,6 @@ import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/port
       BrowserModule,
       BrowserAnimationsModule,
       HttpClientModule,
-      HttpModule,
       MatSidenavModule,
       MatToolbarModule,
       MatButtonModule,

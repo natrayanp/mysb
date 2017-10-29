@@ -12,6 +12,8 @@ export class PortfolioListComponent implements OnInit {
   onAddmode = false;
 
   empty_pfdetails=  {
+    pfPortfolioid: null,
+    pfuserid: null,
     pfPortfolioname: null,
     pfPurpose: null,
     pfBeneUsers: null,
@@ -31,13 +33,24 @@ export class PortfolioListComponent implements OnInit {
         pfstAllotedAmt: 0,
         pfstTotUnit: 0
       }
+    ],
+    pfMFlists:[
+      {
+        pfmfFundname: "",
+        pfmfNAV: 0,
+        pfmfAmt: 0,
+        pfmfPercent: 0,
+        pfmfAllotedAmt: 0
+      }
     ]
   };
 
   //This should come from a service
-    pfdetails=[];
-  /*
-    pfdetails=  [{
+ pfdetails=[];
+  
+/*    pfdetails=  [{
+    pfPortfolioid: null,
+    pfuserid: null,
     pfPortfolioname: "Natrayan",
     pfPurpose: null,
     pfBeneUsers: null,
@@ -46,6 +59,7 @@ export class PortfolioListComponent implements OnInit {
     pfTargetIntRate: null,
     pfPlannedInvAmt: 10000,
     pfStkAmtsplittype: null,
+    pfmfAmtsplittype:null,
     pfSummed:null,
     pfStocklists: [
       {
@@ -66,9 +80,20 @@ export class PortfolioListComponent implements OnInit {
         pfstAllotedAmt: 0,
         pfstTotUnit: 0
       }
+    ],
+    pfMFlists:[
+      {
+        pfmfFundname: "",
+        pfmfNAV: 0,
+        pfmfAmt: 0,
+        pfmfPercent: 0,
+        pfmfAllotedAmt: 0
+      }
     ]
   },
   {
+    pfPortfolioid: null,
+    pfuserid: null,
     pfPortfolioname: "arun",
     pfPurpose: null,
     pfBeneUsers: null,
@@ -87,6 +112,15 @@ export class PortfolioListComponent implements OnInit {
         pfstPercent: 0,
         pfstAllotedAmt: 0,
         pfstTotUnit: 0
+      }
+    ],
+    pfMFlists:[
+      {
+        pfmfFundname: "",
+        pfmfNAV: 0,
+        pfmfAmt: 0,
+        pfmfPercent: 0,
+        pfmfAllotedAmt: 0
       }
     ]
   }];
@@ -120,7 +154,7 @@ cardasave(pfformobj){
   console.log("save card");
   console.log(pfformobj.value);
   this.pfdetails.unshift(pfformobj.value);
-
+// logic to be added to save it in DB
 
 }
 

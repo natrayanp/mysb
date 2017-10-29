@@ -12,7 +12,7 @@ import { SetjwtService } from '../natservices/setjwtservice.service';
 })
 export class LogincheckComponent implements OnInit {
 
-  data:Response;
+  data:any;
   natkey:any;
   
   constructor(private router: Router, private route: ActivatedRoute, private setjwtservice: SetjwtService) { }
@@ -33,6 +33,7 @@ export class LogincheckComponent implements OnInit {
     .login(natkey)
     .subscribe(
       (data) => {
+        console.log(data);
         this.data = data;
         localStorage.setItem("natjwt",JSON.stringify(this.data['natjwt']));
         window.opener.location="/securedpg/dashboard";        
