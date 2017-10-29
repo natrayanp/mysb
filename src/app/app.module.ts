@@ -106,7 +106,7 @@ import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/port
       MatDialogModule,
       MatSnackBarModule,
       MatDatepickerModule,MatNativeDateModule,
-    RouterModule.forRoot(ROUTES ,{enableTracing: true })
+    RouterModule.forRoot(ROUTES ,/*{enableTracing: true }*/)
   ],
   entryComponents: [Dialog1,PfqtypopupComponent],
   providers: [SetjwtService],

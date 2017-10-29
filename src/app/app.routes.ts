@@ -11,7 +11,7 @@ import { UserListComponent } from './postlogin/settings/userssetup/user-list/use
 import { SettingsComponent } from './postlogin/settings/settings.component';
 import { PortfoliosetupComponent } from './postlogin/settings/portfoliosetup/portfoliosetup.component';
 import { PortfolioCardComponent } from './postlogin/settings/portfoliosetup/portfolio-card/portfolio-card.component';
-
+import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/portfolio-list/portfolio-list.component';
 
 
 export const ROUTES: Routes = [
@@ -22,7 +22,7 @@ export const ROUTES: Routes = [
     {path: 'dashboard',  component: DashboardComponent},
     {path: 'settings',  component: SettingsComponent, children: [
          {path: 'usersetup',  component: UserListComponent},
-         {path: 'portfoliosetup',  component: PortfolioCardComponent}      
+         {path: 'portfoliosetup',  component: PortfolioListComponent}      
     ]},     
   ]},  
   {path: 'authchk', component: LogincheckComponent},
