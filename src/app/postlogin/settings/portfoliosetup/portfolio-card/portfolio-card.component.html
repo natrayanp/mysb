@@ -380,7 +380,7 @@
     <mat-card-actions>
         <div fxLayout="row" fxLayoutWrap fxLayoutAlign="center center"> 
         
-        <button mat-raised-button (click)="cancel_cardedit()" color="accent" [fxHide]="Cancelutlogic()" >Cancel</button>   
+        <button mat-raised-button (click)="cancel_cardedit(index)" color="accent" [fxHide]="Cancelutlogic()" >Cancel</button>   
         
         <button mat-raised-button (click)="UserEdit($event)" color="accent" [fxHide]="onEdit"  >Edit</button>
         <span fxFlex="30" [fxHide]="!onEdit"></span>      
@@ -400,7 +400,7 @@
 <div fxLayout="column">
         <pre>{{pfForm.value | json}}</pre>
 </div>
- 
+
 
 <div style="display: flex; justify-content: center;">
         <div style="padding: 1em; border: 1px solid lightgray;">

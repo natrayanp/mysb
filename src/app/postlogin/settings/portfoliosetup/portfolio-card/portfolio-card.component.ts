@@ -119,7 +119,12 @@ export class PortfolioCardComponent implements OnInit
       
       });
 
-      this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
+    
+    this.FormCardpopulate();
+
+    /* replacing the below with populatevalues() function
+
+    this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
       
     
     if (this.Mypfdetailcpy !== null){
@@ -141,7 +146,7 @@ export class PortfolioCardComponent implements OnInit
        
       }
     );
-  }
+  }*/
   console.log("check mypfdetailscopy");
   console.log(JSON.stringify(this.Mypfdetailcpy));
 
@@ -369,9 +374,58 @@ Cancelutlogic(){
     }
 }
 
-cancel_cardedit(){
-  this.onEdit=!this.onEdit;
-  this.cardcancel.emit(null);
+FormCardpopulate(){
+
+  this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));  
+  
+   if (this.Mypfdetailcpy !== null){
+      this.Mypfdetailcpy.pfStocklists.forEach( 
+        (stklstobjor) => {
+          //this.pfForm.controls.pfStocklists.push(this.initStkItemRows(po);
+          var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
+          scontrol.push(this.initStkItemRows(stklstobjor));
+         
+        }
+        
+      );
+  
+      this.Mypfdetailcpy.pfMFlists.forEach( 
+        (mflstobjor) => {
+          //this.pfForm.controls.pfStocklists.push(this.initStkItemRows(po);
+          var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
+          scontrol.push(this.initMFItemRows(mflstobjor));
+         
+        }
+      );
+    }
+}
+
+cancel_cardedit(i){
+
+  this.onEdit=!this.onEdit; 
+  var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
+  scontrol.controls=[];
+  var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
+  scontrol.controls=[];
+  
+  /*
+  var j=(this.Mypfdetail.pfStocklists.length);  //this gives the poition past orignal length
+  if(this.Mypfdetail.pfStocklists.length < this.Mypfdetailcpy.pfStocklists.length){
+    for(var i=j;i<this.Mypfdetailcpy.pfStocklists.length;i++){
+    var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
+    scontrol.removeAt(j);
+  }
+  }else{
+
+  }
+  }*/
+  
+  this.FormCardpopulate();
+
+  this.cardcancel.emit(i);
+
+
+
   //To be implemented either with service or with emitter to go back to parent
 }
 

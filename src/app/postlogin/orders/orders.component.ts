@@ -45,6 +45,8 @@ export class OrdersComponent implements OnInit {
   dialogRef: MatDialogRef<any>;
 
   constructor(private fb: FormBuilder, private renderer: Renderer2, public dialog: MatDialog, public snackBar: MatSnackBar) {
+
+    
     this.rForm = fb.group({
       
       'portfolio':[null,Validators.required],
@@ -84,7 +86,7 @@ export class OrdersComponent implements OnInit {
     
    }
    
-   //On click of quantity check if we have portfolio wise data, else send qty as zero for selectedpfs.  
+   //On click of quantity, check if we have portfolio wise data, else send qty as zero for selectedpfs.  
    //Else send portfolio wise data which will have portfolio name and qty.
    
    onChangeObj(newobjval){

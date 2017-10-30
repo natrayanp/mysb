@@ -46,9 +46,9 @@ export class PortfolioListComponent implements OnInit {
   };
 
   //This should come from a service
- pfdetails=[];
+ //pfdetails=[];
   
-/*    pfdetails=  [{
+   pfdetails=  [{
     pfPortfolioid: null,
     pfuserid: null,
     pfPortfolioname: "Natrayan",
@@ -125,7 +125,7 @@ export class PortfolioListComponent implements OnInit {
     ]
   }];
   
-  */
+  
 
   constructor(private router: Router) { }
 
@@ -143,10 +143,13 @@ addNewPortfolio(){
   this.onAddmode=!this.onAddmode;
 }
 
-cardacancel(){
+cardacancel(event,index){
   this.pfdetails.unshift(this.empty_pfdetails);
+  console.log("this.pfdetails");
+  console.log(this.pfdetails);
   this.CanceladdNewPortfolio();
   this.onAddmode=!this.onAddmode;
+
 }
 
 cardasave(pfformobj){
