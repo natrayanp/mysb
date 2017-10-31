@@ -184,17 +184,20 @@
             
             <!--mat-toolbar ><span>MyToolBar</span-->
 
-                <div fxLayout="column"  fxLayoutWrap fxLayoutAlign="start center" >
+                <div fxLayout="row"  fxLayoutWrap fxLayoutAlign ="end center" style="line-height: 0.5em;">
+                    
+                        <div fxFlex>
+                        <label >Balance Left :</label> 
+                        <p><label><h3>{{balanceleft}}</h3></label></p>
+                        </div>
+
+                        <div fxFlex>
+                        <label >Allocated For Stock :</label> 
+                        <p><label><h3>{{stksummed}}</h3></label></p>
+                        </div>
                         
-                            <div fxFlex="1 1 50%">
-                            <label >Balance :</label> 
-                            <p><label><h3>{{balanceleft}}</h3></label></p>
-                            <label >Allocated For Stock:</label> 
-                            <p><label><h3>{{stksummed}}</h3></label></p>
-                            </div>
-                            <div>
-                            
-                        <label fxFlex>Balance Amount split by</label>
+                    <div fxFlex>
+                        <label  >Balance Amount split by</label>
                         <mat-form-field fxFlex="1 1 25%">
                             
                             <input type="text" matInput formControlName="pfStkAmtsplittype" [matAutocomplete]="auto2" [(ngModel)]="selectedAmtSplitType" [readonly]="!onEdit">
@@ -204,13 +207,16 @@
                               </mat-option>
                             </mat-autocomplete>
                           </mat-form-field>
-                        </div>
-                        
-        
-                        
                     </div>
+                    
+    
+                    
+                </div>
+
             <!--/mat-toolbar-->
-               
+            &nbsp;
+            &nbsp;
+            
                     
                       <div formArrayName="pfStocklists">
                     
@@ -241,11 +247,11 @@
                             </mat-form-field>
 
                             <mat-form-field fxFlex="1 0 80px">
-                                <input matInput type="number" placeholder="Alloted Amt" formControlName= "pfstAllotedAmt" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstAllotedAmt">
+                                <input matInput type="number" placeholder="Alloted Amt" formControlName= "pfstAllotedAmt" readonly [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstAllotedAmt">
                             </mat-form-field>
     
                             <mat-form-field fxFlex="1 0 80px">
-                            <input matInput placeholder="Total Units" formControlName= "pfstTotUnit" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstTotUnit">
+                            <input matInput placeholder="Total Units" formControlName= "pfstTotUnit" readonly [(ngModel)]="Mypfdetailcpy.pfStocklists[i].pfstTotUnit">
                             </mat-form-field>
                         
                         
@@ -291,7 +297,7 @@
                         <div>
                         <label fxFlex>Balance Amount split by</label>
                         <mat-form-field fxFlex="1 1 25%">                            
-                            <input type="text" matInput formControlName="pfMFAmtsplittype" [matAutocomplete]="auto3" [(ngModel)]="selectedMFAmtSplitType" [readonly]="!onEdit">
+                            <input type="text" matInput formControlName="pfmfAmtsplittype" [matAutocomplete]="auto3" [(ngModel)]="selectedMFAmtSplitType" [readonly]="!onEdit">
                             <mat-autocomplete #auto3="matAutocomplete">
                               <mat-option *ngFor="let AmtSplitType of AmtSplitTypes" [value]="AmtSplitType" (onSelectionChange)="MFAmtSplitchange(AmtSplitType)">
                                 {{ AmtSplitType }}
@@ -331,7 +337,7 @@
                             </mat-form-field>
 
                             <mat-form-field fxFlex="1 0 80px">
-                                <input matInput type="number" placeholder="Alloted Amt" formControlName= "pfmfAllotedAmt" [readonly]="!onEdit" [(ngModel)]="Mypfdetailcpy.pfMFlists[i].pfmfAllotedAmt">
+                                <input matInput type="number" placeholder="Alloted Amt" formControlName= "pfmfAllotedAmt" readonly [(ngModel)]="Mypfdetailcpy.pfMFlists[i].pfmfAllotedAmt">
                             </mat-form-field>
                         
                         
@@ -400,7 +406,7 @@
 <div fxLayout="column">
         <pre>{{pfForm.value | json}}</pre>
 </div>
-
+-->
 
 <div style="display: flex; justify-content: center;">
         <div style="padding: 1em; border: 1px solid lightgray;">

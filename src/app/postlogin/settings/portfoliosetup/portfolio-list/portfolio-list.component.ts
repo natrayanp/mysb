@@ -21,13 +21,15 @@ export class PortfolioListComponent implements OnInit {
     pfTargetDt: null,
     pfTargetIntRate: null,
     pfPlannedInvAmt: 0,
+    pfInvAmtFeq:null,
     pfStkAmtsplittype: null,
+    pfmfAmtsplittype:null,
     pfSummed:null,
     pfStocklists: [
       {
         pfstExchange: "",
         pfstTradingsymbl: "",
-        pfstLtp: "",
+        pfstLtp: 0,
         pfstAmt: 0,
         pfstPercent: 0,
         pfstAllotedAmt: 0,
@@ -46,9 +48,10 @@ export class PortfolioListComponent implements OnInit {
   };
 
   //This should come from a service
- //pfdetails=[];
+ pfdetails=[];
   
-   pfdetails=  [{
+ /* 
+ pfdetails=  [{
     pfPortfolioid: null,
     pfuserid: null,
     pfPortfolioname: "Natrayan",
@@ -58,73 +61,41 @@ export class PortfolioListComponent implements OnInit {
     pfTargetDt: null,
     pfTargetIntRate: null,
     pfPlannedInvAmt: 10000,
-    pfStkAmtsplittype: null,
-    pfmfAmtsplittype:null,
-    pfSummed:null,
+    pfInvAmtFeq:"Daily",
+    pfStkAmtsplittype: "Amount",
+    pfmfAmtsplittype:"%",    
+    //pfSummed:null,
     pfStocklists: [
       {
-        pfstExchange: "",
+        pfstExchange: "NSE",
         pfstTradingsymbl: "ITC",
-        pfstLtp: "",
-        pfstAmt: 0,
+        pfstLtp: 300,        //this should be populated in card component  by a service
+        pfstAmt: 3000,
         pfstPercent: 0,
-        pfstAllotedAmt: 0,
-        pfstTotUnit: 0
+        pfstAllotedAmt: 3000,
+        pfstTotUnit: 10
       },
       {
-        pfstExchange: "",
+        pfstExchange: "NSE",
         pfstTradingsymbl: "SBIN",
-        pfstLtp: "",
-        pfstAmt: 0,
+        pfstLtp: 200,  //this should be populated in card component  by a service
+        pfstAmt: 1000,
         pfstPercent: 0,
-        pfstAllotedAmt: 0,
-        pfstTotUnit: 0
+        pfstAllotedAmt: 1000,
+        pfstTotUnit: 2
       }
     ],
     pfMFlists:[
       {
-        pfmfFundname: "",
-        pfmfNAV: 0,
+        pfmfFundname: "Birla MNC",
+        pfmfNAV: 600,  //this should be populated in card component  by a service
         pfmfAmt: 0,
-        pfmfPercent: 0,
-        pfmfAllotedAmt: 0
-      }
-    ]
-  },
-  {
-    pfPortfolioid: null,
-    pfuserid: null,
-    pfPortfolioname: "arun",
-    pfPurpose: null,
-    pfBeneUsers: null,
-    pfStartDt: null,
-    pfTargetDt: null,
-    pfTargetIntRate: null,
-    pfPlannedInvAmt: null,
-    pfStkAmtsplittype: null,
-    pfSummed:null,
-    pfStocklists: [
-      {
-        pfstExchange: "",
-        pfstTradingsymbl: "",
-        pfstLtp: "",
-        pfstAmt: 0,
-        pfstPercent: 0,
-        pfstAllotedAmt: 0,
-        pfstTotUnit: 0
-      }
-    ],
-    pfMFlists:[
-      {
-        pfmfFundname: "",
-        pfmfNAV: 0,
-        pfmfAmt: 0,
-        pfmfPercent: 0,
-        pfmfAllotedAmt: 0
+        pfmfPercent: 50,
+        pfmfAllotedAmt: 5000
       }
     ]
   }];
-  
+  */
   
 
   constructor(private router: Router) { }

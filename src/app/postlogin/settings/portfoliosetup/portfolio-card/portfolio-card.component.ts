@@ -15,7 +15,7 @@ export class PortfolioCardComponent implements OnInit
   public pfForm : FormGroup;
   
   summed: number;
-  balanceleft:number;
+  balanceleft:number = 0;
   mfsummed:number;
   stksummed:number;
   today = new Date();
@@ -31,9 +31,9 @@ export class PortfolioCardComponent implements OnInit
  emptyPayOff = {
       pfstExchange: "",
       pfstTradingsymbl: "",
-      pfstLtp: "",
-      pfstAmt: "",
-      pfstPercent: "",
+      pfstLtp: 0,
+      pfstAmt: 0,
+      pfstPercent: 0,
       pfstAllotedAmt: 0,
       pfstTotUnit: 0
     };
@@ -78,6 +78,7 @@ export class PortfolioCardComponent implements OnInit
   pfTargetIntRate: null,
   pfPlannedInvAmt: null,
   pfStkAmtsplittype: null,
+  pfmfAmtsplittype:null,
   pfSummed:null,
   pfStocklists: [
     {
@@ -93,10 +94,18 @@ export class PortfolioCardComponent implements OnInit
 }
  // this has to come from master component*/
 
+ //Empty
     if (this.Mypfdetail == null || this.Mypfdetail.pfPortfolioname == null )
     {
       this.onEdit=true;
     }
+    if(this.Mypfdetail.pfStkAmtsplittype !== null){
+      this.selectedAmtSplitType = this.Mypfdetail.pfStkAmtsplittype;
+    }
+    if(this.Mypfdetail.pfmfAmtsplittype !== null){
+      this.selectedMFAmtSplitType = this.Mypfdetail.pfmfAmtsplittype;
+    }
+    
 
     this.pfForm = this.pffb.group({ 
       pfPortfolioid:[null],
@@ -110,7 +119,7 @@ export class PortfolioCardComponent implements OnInit
       pfPlannedInvAmt:[0,Validators.required],
       pfInvAmtFeq:[null,Validators.required],
       pfStkAmtsplittype:[null,Validators.required],
-      pfMFAmtsplittype:[null,Validators.required],
+      pfmfAmtsplittype:[null,Validators.required],
       pfSummed: [0],
       pfStocklists:new FormArray([]),
       pfMFlists:new FormArray([])
@@ -152,22 +161,21 @@ export class PortfolioCardComponent implements OnInit
 
       this.pfForm.get('pfStocklists').valueChanges.subscribe(values => {
      resolvedPromise.then(() => {
-        console.log("resolve");
-        console.log(this.pfForm.controls.pfStkAmtsplittype.value);
+        
        switch (this.pfForm.controls.pfStkAmtsplittype.value)
        {
          case "%":
             values.forEach((cure,inder) => {             
               
               this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt = this.Mypfdetailcpy.pfPlannedInvAmt *(this.Mypfdetailcpy.pfStocklists[inder].pfstPercent/100);
-              this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfstLtp;
+              this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfstLtp))).toFixed(0);
             });
             break;
 
          case "Amount":
             values.forEach((cure,inder) => {
               this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt = <number>this.Mypfdetailcpy.pfStocklists[inder].pfstAmt;
-              this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfstLtp;
+              this.Mypfdetailcpy.pfStocklists[inder].pfstTotUnit = (Math.floor((this.Mypfdetailcpy.pfStocklists[inder].pfstAllotedAmt/this.Mypfdetailcpy.pfStocklists[inder].pfstLtp))).toFixed(0);
             });
           break;
         default:
@@ -181,7 +189,7 @@ export class PortfolioCardComponent implements OnInit
         this.summed = this.mfsummed  + this.stksummed;
         this.Mypfdetailcpy.pfSummed = this.summed;
         this.balanceleft= this.Mypfdetailcpy.pfPlannedInvAmt - this.Mypfdetailcpy.pfSummed ;
-        
+      
       });
       //this.summed = values.reduce((acc, cur) => acc + cur.pfstTotUnit, 0);
     })
@@ -190,8 +198,9 @@ export class PortfolioCardComponent implements OnInit
     this.pfForm.get('pfMFlists').valueChanges.subscribe(values => {
       resolvedPromise.then(() => {
          console.log("resolve");
-         console.log(this.pfForm.controls.pfMFAmtsplittype.value);
-        switch (this.pfForm.controls.pfMFAmtsplittype.value)
+         console.log(this.pfForm.controls.pfmfAmtsplittype.value);
+         
+        switch (this.pfForm.controls.pfmfAmtsplittype.value)
         {
           case "%":
              values.forEach((cure,inder) => {             
@@ -214,8 +223,10 @@ export class PortfolioCardComponent implements OnInit
          this.Mypfdetailcpy.pfSummed = this.summed;
 
          this.balanceleft= this.Mypfdetailcpy.pfPlannedInvAmt - this.Mypfdetailcpy.pfSummed ;
-         
+        
        });
+      
+    
        //this.summed = values.reduce((acc, cur) => acc + cur.pfstTotUnit, 0);
      })
 
@@ -275,50 +286,19 @@ AmtSplitchange(newobjval){
 
 });
 
-/*  switch (this.selectedAmtSplitType)
-  {
-    case "%":
-
-      break;
-    case "Amount":
-      this.Mypfdetailcpy.pfStocklists.forEach((cure,inder) => {
-        
-       const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfStocklists']).controls[inder]).controls['pfstPercent'].patchValue(0);
-        
-      });
-      break;      
-  }*/
 }
 
 MFAmtSplitchange(newobjval){
-  this.Mypfdetailcpy.pfMFAmtsplittype = this.selectedMFAmtSplitType;
- 
-  this.Mypfdetailcpy.pfMFlists.forEach((cure,inder) => {
+  this.Mypfdetailcpy.pfmfAmtsplittype = this.selectedMFAmtSplitType;
+
+ this.Mypfdetailcpy.pfMFlists.forEach((cure,inder) => {
     this.Mypfdetailcpy.pfMFlists[inder].pfstAmt = 0;
     this.Mypfdetailcpy.pfMFlists[inder].pfstPercent = 0;
     const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfAmt'].patchValue(0);
     const control4 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfPercent'].patchValue(0);        
   });
 
-/*
-   switch (this.selectedMFAmtSplitType)
-   {
-     case "%":
-       this.Mypfdetailcpy.pfMFlists.forEach((cure,inder) => {
-         this.Mypfdetailcpy.pfMFlists[inder].pfstAmt = 0;
-         this.Mypfdetailcpy.pfMFlists[inder].pfstPercent = 0;
-         const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfAmt'].patchValue(0);
-         const control4 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfPercent'].patchValue(0);        
-       });
-       break;
-     case "Amount":
-       this.Mypfdetailcpy.pfMFlists.forEach((cure,inder) => {
-         this.Mypfdetailcpy.pfMFlists[inder].pfstPercent = 0;
-        const control3 = (<FormGroup>(<FormArray>this.pfForm.controls['pfMFlists']).controls[inder]).controls['pfmfPercent'].patchValue(0);
-         
-       });
-       break;      
-   }*/
+
  }
 
 addNewStkRow() {
@@ -376,22 +356,27 @@ Cancelutlogic(){
 
 FormCardpopulate(){
 
-  this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));  
+  this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
   
+  if(this.Mypfdetail.pfStkAmtsplittype !== null){
+    this.selectedAmtSplitType = this.Mypfdetail.pfStkAmtsplittype;
+  }
+  if(this.Mypfdetail.pfmfAmtsplittype !== null){
+    this.selectedMFAmtSplitType = this.Mypfdetail.pfmfAmtsplittype;
+  }
+
    if (this.Mypfdetailcpy !== null){
+
       this.Mypfdetailcpy.pfStocklists.forEach( 
         (stklstobjor) => {
-          //this.pfForm.controls.pfStocklists.push(this.initStkItemRows(po);
           var scontrol = <FormArray>this.pfForm.controls['pfStocklists'];
-          scontrol.push(this.initStkItemRows(stklstobjor));
-         
-        }
-        
+          scontrol.push(this.initStkItemRows(stklstobjor));          
+        }        
       );
   
       this.Mypfdetailcpy.pfMFlists.forEach( 
         (mflstobjor) => {
-          //this.pfForm.controls.pfStocklists.push(this.initStkItemRows(po);
+          
           var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
           scontrol.push(this.initMFItemRows(mflstobjor));
          
@@ -407,26 +392,11 @@ cancel_cardedit(i){
   scontrol.controls=[];
   var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
   scontrol.controls=[];
-  
-  /*
-  var j=(this.Mypfdetail.pfStocklists.length);  //this gives the poition past orignal length
-  if(this.Mypfdetail.pfStocklists.length < this.Mypfdetailcpy.pfStocklists.length){
-    for(var i=j;i<this.Mypfdetailcpy.pfStocklists.length;i++){
-    var scontrol = <FormArray>this.pfForm.controls['pfMFlists'];
-    scontrol.removeAt(j);
-  }
-  }else{
-
-  }
-  }*/
-  
+   
   this.FormCardpopulate();
 
   this.cardcancel.emit(i);
 
-
-
-  //To be implemented either with service or with emitter to go back to parent
 }
 
 save_cardedit(pfFormfrm){
